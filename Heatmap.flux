@@ -1,0 +1,5 @@
+from(bucket: "sound_data")
+  |> range(start: -6h,stop:-3h)
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+  |> group(columns: ["_time"])

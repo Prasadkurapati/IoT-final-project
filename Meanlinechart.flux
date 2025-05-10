@@ -1,0 +1,6 @@
+from(bucket: "sound_data")
+  |> range(start: -4h,stop:-2h)
+  |> filter(fn: (r) => r["_measurement"] == "mqtt_consumer")
+  |> filter(fn: (r) => r["_field"] == "value")
+  |> aggregateWindow(every: 10s, fn: mean)
+  |> yield(name: "mean")
